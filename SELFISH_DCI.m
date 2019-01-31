@@ -1,4 +1,23 @@
 function output = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INTERVAL)
+%SELFISH_DCI find differential chromatin interactions between two contact
+%maps
+%
+%   output =
+%   SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INTERVAL)
+%   finds DCIs between two contact maps given by filenames contc1 and
+%   contc2 with p-values less than THRESHOLD in the specified INTERVAL. 
+%
+%   'contc1'           -   contact map filename 1
+%
+%   'norm1'            -   normalization vector filename 1
+%
+%   'norm2'            -   normalization vector filename 2
+%
+%   'THRESHOLD'        -   THRESHOLD at which DCIs are return
+%
+%   'RESOLUTION'       -  Data resoultion in bp
+%
+%   'INTERVAL'         - The interval in bp for which DCIs are detected.
 
     INTERVAL = ceil(INTERVAL/RESOLUTION);
     % Read contact-map 1 and 2
@@ -75,25 +94,25 @@ function output = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INT
 
     H1 = sparse(H1(:,1),H1(:,2),H1(:,3),intvLen,intvLen);
     normH1 = sparse(normH1(:,1),normH1(:,2),normH1(:,3),intvLen,intvLen);
-%     if sum(sum(triu(H1,1)))==0
-%         H1=tril(H1)+tril(H1,1)';
-%         normH1=tril(normH1)+tril(normH1,1)';
-%     else
-%         H1=triu(H1)+triu(H1,1)';
-%         normH1=triu(normH1)+triu(normH1,1)';
-%     end
+    if sum(sum(triu(H1,1)))==0
+        H1=tril(H1)+tril(H1,1)';
+        normH1=tril(normH1)+tril(normH1,1)';
+    else
+        H1=triu(H1)+triu(H1,1)';
+        normH1=triu(normH1)+triu(normH1,1)';
+    end
     normH1 = full(normH1);
     H1 = full(H1);
 
     H2 = sparse(H2(:,1),H2(:,2),H2(:,3),intvLen,intvLen);
     normH2 = sparse(normH2(:,1),normH2(:,2),normH2(:,3),intvLen,intvLen);
-%     if sum(sum(triu(H2,1)))==0
-%         H2=tril(H2)+tril(H2,1)';
-%         normH2=tril(normH2)+tril(normH2,1)';
-%     else
-%         H2=triu(H2)+triu(H2,1)';
-%         normH2=triu(normH2)+triu(normH2,1)';
-%     end
+    if sum(sum(triu(H2,1)))==0
+        H2=tril(H2)+tril(H2,1)';
+        normH2=tril(normH2)+tril(normH2,1)';
+    else
+        H2=triu(H2)+triu(H2,1)';
+        normH2=triu(normH2)+triu(normH2,1)';
+    end
     normH2 = full(normH2);
     H2 = full(H2);
     
