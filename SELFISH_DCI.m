@@ -184,5 +184,5 @@ function output = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INT
     %%%
     %
     sigIndx = correctedPVAL < THRESHOLD;
-    output = [ptx(sigIndx) pty(sigIndx) correctedPVAL(sigIndx)]; 
+    output = [(ptx(sigIndx)-1)*5000+INTERVAL(1) (pty(sigIndx)-1)*5000+INTERVAL(1) correctedPVAL(sigIndx)]; 
 end    
