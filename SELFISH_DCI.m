@@ -10,19 +10,16 @@ function output = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INT
     H1 = [H1{1}(1:L) H1{2}(1:L) H1{3}(1:L)];
     H1(:,1:2) = ceil(H1(:,1:2)/RESOLUTION)+1;
     H1 = double(H1);
-    N1 = max(max(H1(:,1)),max(H1(:,2)));
-    fid = fopen(strcat(contc2);
+    fid = fopen(contc2);
     H2 = textscan(fid,'%d \t %d \t %f');
 
     L = min([size(H2{1}(:),1) size(H2{2}(:),1) size(H2{3}(:),1)]);
     H2 = [H2{1}(1:L) H2{2}(1:L) H2{3}(1:L)];
     H2(:,1:2) = ceil(H2(:,1:2)/RESOLUTION)+1;
     H2 = double(H2);
-    N2 = max(max(H2(:,1)),max(H2(:,2)));
-
     % % KR Normalize the contact maps
     disp('Normalizing contact maps...');
-    KR_norm = load(strcat(norm1);
+    KR_norm = load(norm1);
     KR_norm(KR_norm<0.1) = nan;
     H1(:,3) = H1(:,3)./(KR_norm(H1(:,1)).*KR_norm(H1(:,2)));
     H1(isnan( H1(:,3)),3) = 0;
@@ -75,33 +72,31 @@ function output = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INT
 
     %% convert (i,j,v) matrices to full matrices
     intvLen = INTERVAL(2)-INTERVAL(1)+1;
-    if size(H1,2)==3
 
-        H1 = sparse(H1(:,1),H1(:,2),H1(:,3),intvLen,intvLen);
-        normH1 = sparse(normH1(:,1),normH1(:,2),normH1(:,3),intvLen,intvLen);
-        if sum(sum(triu(H1,1)))==0
-            H1=tril(H1)+tril(H1,1)';
-            normH1=tril(normH1)+tril(normH1,1)';
-        else
-            H1=triu(H1)+triu(H1,1)';
-            normH1=triu(normH1)+triu(normH1,1)';
-        end
-        normH1 = full(normH1);
-        H1 = full(H1);
-    end
-    if size(H2,2)==3
-        H2 = sparse(H2(:,1),H2(:,2),H2(:,3),intvLen,intvLen);
-        normH2 = sparse(normH2(:,1),normH2(:,2),normH2(:,3),intvLen,intvLen);
-        if sum(sum(triu(H2,1)))==0
-            H2=tril(H2)+tril(H2,1)';
-            normH2=tril(normH2)+tril(normH2,1)';
-        else
-            H2=triu(H2)+triu(H2,1)';
-            normH2=triu(normH2)+triu(normH2,1)';
-        end
-        normH2 = full(normH2);
-        H2 = full(H2);
-    end
+    H1 = sparse(H1(:,1),H1(:,2),H1(:,3),intvLen,intvLen);
+    normH1 = sparse(normH1(:,1),normH1(:,2),normH1(:,3),intvLen,intvLen);
+%     if sum(sum(triu(H1,1)))==0
+%         H1=tril(H1)+tril(H1,1)';
+%         normH1=tril(normH1)+tril(normH1,1)';
+%     else
+%         H1=triu(H1)+triu(H1,1)';
+%         normH1=triu(normH1)+triu(normH1,1)';
+%     end
+    normH1 = full(normH1);
+    H1 = full(H1);
+
+    H2 = sparse(H2(:,1),H2(:,2),H2(:,3),intvLen,intvLen);
+    normH2 = sparse(normH2(:,1),normH2(:,2),normH2(:,3),intvLen,intvLen);
+%     if sum(sum(triu(H2,1)))==0
+%         H2=tril(H2)+tril(H2,1)';
+%         normH2=tril(normH2)+tril(normH2,1)';
+%     else
+%         H2=triu(H2)+triu(H2,1)';
+%         normH2=triu(normH2)+triu(normH2,1)';
+%     end
+    normH2 = full(normH2);
+    H2 = full(H2);
+    
     disp('Finding differences...');
     %% Gaussian impact radii
     % keep zero-interaction 2D coordinates
