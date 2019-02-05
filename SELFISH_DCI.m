@@ -37,16 +37,18 @@ function output = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INT
     H2(:,1:2) = ceil(H2(:,1:2)/RESOLUTION)+1;
     H2 = double(H2);
     % % KR Normalize the contact maps
-    disp('Normalizing contact maps...');
-    KR_norm = load(norm1);
-    KR_norm(KR_norm<0.1) = nan;
-    H1(:,3) = H1(:,3)./(KR_norm(H1(:,1)).*KR_norm(H1(:,2)));
-    H1(isnan( H1(:,3)),3) = 0;
+    if ((~isempty(norm1)) & (~isempty(norm2)))
+        disp('Normalizing contact maps...');
+        KR_norm = load(norm1);
+        KR_norm(KR_norm<0.1) = nan;
+        H1(:,3) = H1(:,3)./(KR_norm(H1(:,1)).*KR_norm(H1(:,2)));
+        H1(isnan( H1(:,3)),3) = 0;
 
-    KR_norm = load(norm2);
-    KR_norm(KR_norm<0.1) = nan;
-    H2(:,3) = H2(:,3)./(KR_norm(H2(:,1)).*KR_norm(H2(:,2)));
-    H2(isnan( H2(:,3)),3) = 0;
+        KR_norm = load(norm2);
+        KR_norm(KR_norm<0.1) = nan;
+        H2(:,3) = H2(:,3)./(KR_norm(H2(:,1)).*KR_norm(H2(:,2)));
+        H2(isnan( H2(:,3)),3) = 0;
+    end
 
     % find distances between interacting loci
     interaction_dist1 = H1(:,2) - H1(:,1);
