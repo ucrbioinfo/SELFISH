@@ -1,4 +1,4 @@
-function output = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INTERVAL)
+function [X,Y,P] = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INTERVAL)
 %SELFISH_DCI find differential chromatin interactions between two contact
 %maps
 %
@@ -11,6 +11,8 @@ function output = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INT
 %
 %   'norm1'            -   normalization vector filename 1
 %
+%   'contc2'           -   contact map filename 2
+%
 %   'norm2'            -   normalization vector filename 2
 %
 %   'THRESHOLD'        -   THRESHOLD at which DCIs are return
@@ -18,7 +20,7 @@ function output = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INT
 %   'RESOLUTION'       -  Data resoultion in bp
 %
 %   'INTERVAL'         - The interval in bp for which DCIs are detected.
-
+cdf(
     INTERVAL = ceil(INTERVAL/RESOLUTION);
     % Read contact-map 1 and 2
     disp('Reading contact maps...');
@@ -49,7 +51,6 @@ function output = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INT
         H2(:,3) = H2(:,3)./(KR_norm(H2(:,1)).*KR_norm(H2(:,2)));
         H2(isnan( H2(:,3)),3) = 0;
     end
-
     % find distances between interacting loci
     interaction_dist1 = H1(:,2) - H1(:,1);
     interaction_dist2 = H2(:,2) - H2(:,1);
@@ -182,9 +183,8 @@ function output = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INT
 
     correctedPVAL = mafdr(PVAL,'BHFDR',1);
     [ptx,pty] = ind2sub(size(normH1),find(indNZ)); 
-    % discard significant DCIs in sparse regions
-    %%%
-    %
     sigIndx = correctedPVAL < THRESHOLD;
-    output = [(ptx(sigIndx)-1)*RESOLUTION+INTERVAL(1) (pty(sigIndx)-1)*RESOLUTION+INTERVAL(1) correctedPVAL(sigIndx)]; 
+    X = (ptx(sigIndx)-1)*RESOLUTION+INTERVAL(1);
+    Y = (pty(sigIndx)-1)*RESOLUTION+INTERVAL(1);
+    P = correctedPVAL(sigIndx);
 end    
