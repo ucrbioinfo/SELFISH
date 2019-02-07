@@ -2,7 +2,9 @@
 SELFISH (Discovery of Differential Chromatin Interactions via a Self-Similarity Measure) is a tool for finding differential chromatin interactions between two Hi-C contact maps. It uses self-similarity to model interactions in a robust way. For more information read the full paper: <a href="https://www.biorxiv.org/content/10.1101/540708v1?rss=1" target="_blank">**Selfish: Discovery of Differential Chromatin Interactions via a Self-Similarity Measure**</a>. 
 
 <h3>Dependency </h3>
-MATLAB 8.5 and newer.
+
+- MATLAB 8.5 and newer.
+
 <h3>Syntax</h3>
 
 - ```[X,Y,P] = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INTERVAL)``` returns the coordinates of differential chromatin interactions [X,Y] and their correponding corrected p-values in P for raw contact maps read from files contc1 and contc2 with normalization vectors read from files norm1 and norm2. 
