@@ -27,8 +27,8 @@ SELFISH_DCI doesn't take any parameters as input but it has two predefined param
 
 - `norm2`               normalization vector filename 2
 
-- `THRESHOLD`           THRESHOLD at which DCIs are return (e.g. 10^-4)
+- `THRESHOLD`           threshold at which DCIs are return (e.g. 10^-4)
 
-- `RESOLUTION`          Data resoultion in bp (e.g. 5000)
+- `RESOLUTION`          data resoultion in bp (e.g. 5000)
 
-- `INTERVAL`            The interval in bp for which DCIs are detected.
+- `INTERVAL`            the interval in bp for which DCIs are detected.
