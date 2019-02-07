@@ -20,7 +20,6 @@ function [X,Y,P] = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,IN
 %   'RESOLUTION'       -  Data resoultion in bp
 %
 %   'INTERVAL'         - The interval in bp for which DCIs are detected.
-cdf(
     INTERVAL = ceil(INTERVAL/RESOLUTION);
     % Read contact-map 1 and 2
     disp('Reading contact maps...');
