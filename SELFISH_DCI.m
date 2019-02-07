@@ -15,11 +15,11 @@ function [X,Y,P] = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,IN
 %
 %   'norm2'            -   normalization vector filename 2
 %
-%   'THRESHOLD'        -   THRESHOLD at which DCIs are return
+%   'THRESHOLD'        -   p-value threshold used for calling DCIs
 %
-%   'RESOLUTION'       -  Data resoultion in bp
+%   'RESOLUTION'       -   data resoultion in bp
 %
-%   'INTERVAL'         - The interval in bp for which DCIs are detected.
+%   'INTERVAL'         -   the interval in bp for which DCIs are detected.
     INTERVAL = ceil(INTERVAL/RESOLUTION);
     % Read contact-map 1 and 2
     disp('Reading contact maps...');
