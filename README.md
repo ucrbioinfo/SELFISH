@@ -14,7 +14,7 @@ SELFISH (Discovery of Differential Chromatin Interactions via a Self-Similarity 
 <h3>Parameters</h3>
 SELFISH_DCI doesn't take any parameters as input but it has two predefined parameters work best for 5kb resoultion.
 
-- `sigma0 = 1.6` first Gaussian filter sigma ($r_0 =  2*ceil(2*sigma0)+1$).
+- `sigma0 = 1.6` first Gaussian filter sigma (r0 = 2*ceil(2*sigma0)+1).
 
 - `s = 10` the number of Gaussian radii used in the modeling.
 <h3>Inputs</h3>
