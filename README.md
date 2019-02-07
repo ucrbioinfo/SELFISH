@@ -4,7 +4,6 @@ SELFISH: Discovery of Differential Chromatin Interactions via a Self-Similarity 
 <h3>Dependency </h3>
 MATLAB 8.5 and newer.
 <h3>Syntax</h3>
-`orthoMCL.txt`
  `[X,Y,P] = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INTERVAL)` returns the coordinates of differential chromatin interactions [X,Y] and their correponding corrected p-values in P for raw contact maps read from files contc1 and contc2 with normalization vectors read from files norm1 and norm2. 
  `[X,Y,P] = SELFISH_DCI(contc1,contc2,[],[],THRESHOLD,RESOLUTION,INTERVAL)` returns the coordinates of differential chromatin interactions [X,Y] and their correponding corrected p-values in P for contact maps read from files contc1 and contc2. 
 
