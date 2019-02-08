@@ -176,7 +176,6 @@ function [X,Y,P] = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,IN
         PVAL(toChangeIndx) = pval(toChangeIndx);
         Scales(toChangeIndx) = scales(level); 
         % move to the next impact radius
-        %Lp = Lc;
         Lc = Ln;
     end
 
