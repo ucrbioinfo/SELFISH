@@ -182,7 +182,7 @@ function [X,Y,P] = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,IN
     correctedPVAL = mafdr(PVAL,'BHFDR',1);
     [ptx,pty] = ind2sub(size(normH1),find(indNZ)); 
     sigIndx = correctedPVAL < THRESHOLD;
-    X = (ptx(sigIndx)-1)*RESOLUTION+INTERVAL(1);
-    Y = (pty(sigIndx)-1)*RESOLUTION+INTERVAL(1);
+    X = (ptx(sigIndx)-1)*RESOLUTION+(INTERVAL(1)-1)*RESOLUTION;
+    Y = (pty(sigIndx)-1)*RESOLUTION+(INTERVAL(1)-1)*RESOLUTION;
     P = correctedPVAL(sigIndx);
 end    
