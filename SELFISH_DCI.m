@@ -2,10 +2,9 @@ function [X,Y,P] = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,IN
 %SELFISH_DCI find differential chromatin interactions between two contact
 %maps
 %
-%   output =
-%   SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INTERVAL)
-%   finds DCIs between two contact maps given by filenames contc1 and
-%   contc2 with p-values less than THRESHOLD in the specified INTERVAL. 
+%   [X,Y,P] = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,INTERVAL)
+%   finds DCIs, with coordinates [X,Y] and p-values P, between two contact maps given by (i,j,v) triplets/filenames contc1 and
+%   contc2 with p-values less than THRESHOLD in the specified interval INTERVAL. 
 %
 %   'contc1'           -   contact map filename 1
 %
@@ -15,38 +14,64 @@ function [X,Y,P] = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,IN
 %
 %   'norm2'            -   normalization vector filename 2
 %
-%   'THRESHOLD'        -   p-value threshold used for calling DCIs
+%   'THRESHOLD'        -   THRESHOLD at which DCIs are return
 %
-%   'RESOLUTION'       -   data resoultion in bp
+%   'RESOLUTION'       -  Data resoultion in bp
 %
-%   'INTERVAL'         -   the interval in bp for which DCIs are detected.
+%   'INTERVAL'         - The interval in bp for which DCIs are detected.
     INTERVAL = ceil(INTERVAL/RESOLUTION);
     % Read contact-map 1 and 2
-    disp('Reading contact maps...');
-    fid = fopen(contc1);
-    H1 = textscan(fid,'%d \t %d \t %f');
-    L = min([size(H1{1}(:),1) size(H1{2}(:),1) size(H1{3}(:),1)]);
+    if ischar(contc1)  
+        disp('Reading contact map 1...');
+        fid = fopen(contc1);
+        H1 = textscan(fid,'%d \t %d \t %f');
+        L = min([size(H1{1}(:),1) size(H1{2}(:),1) size(H1{3}(:),1)]);
 
-    H1 = [H1{1}(1:L) H1{2}(1:L) H1{3}(1:L)];
-    H1(:,1:2) = ceil(H1(:,1:2)/RESOLUTION)+1;
-    H1 = double(H1);
-    fid = fopen(contc2);
-    H2 = textscan(fid,'%d \t %d \t %f');
+        H1 = [H1{1}(1:L) H1{2}(1:L) H1{3}(1:L)];
+        H1(:,1:2) = ceil(H1(:,1:2)/RESOLUTION)+1;
+        H1 = double(H1);
+        fclose(fid);
+    elseif isnumeric(contc1) & ismatrix(contc1) & (size(contc1,2)==3)
+        H1 = contc1; 
+    end
+    
+    if ischar(contc2)
+        disp('Reading contact map 2...');
+        fid = fopen(contc2);
+        H2 = textscan(fid,'%d \t %d \t %f');
 
-    L = min([size(H2{1}(:),1) size(H2{2}(:),1) size(H2{3}(:),1)]);
-    H2 = [H2{1}(1:L) H2{2}(1:L) H2{3}(1:L)];
-    H2(:,1:2) = ceil(H2(:,1:2)/RESOLUTION)+1;
-    H2 = double(H2);
+        L = min([size(H2{1}(:),1) size(H2{2}(:),1) size(H2{3}(:),1)]);
+        H2 = [H2{1}(1:L) H2{2}(1:L) H2{3}(1:L)];
+        H2(:,1:2) = ceil(H2(:,1:2)/RESOLUTION)+1;
+        H2 = double(H2);
+        fclose(fid);
+    elseif isnumeric(contc2) & ismatrix(contc2) & (size(contc2,2)==3)
+        H2 = contc2; 
+    end
     % % KR Normalize the contact maps
-    if ((~isempty(norm1)) & (~isempty(norm2)))
-        disp('Normalizing contact maps...');
-        KR_norm = load(norm1);
-        KR_norm(KR_norm<0.1) = nan;
+    if (~isempty(norm1)) 
+        disp('Normalizing contact map 1...');
+        if ischar(norm1)
+            KR_norm = load(norm1);
+            KR_norm(KR_norm<0.1) = nan;
+        elseif isnumeric(norm1) & ismatrix(norm1) & (size(norm1,2)==1)
+            KR_norm = norm1;
+        else
+           error('Wrong format for normalization vector 1') 
+        end
         H1(:,3) = H1(:,3)./(KR_norm(H1(:,1)).*KR_norm(H1(:,2)));
-        H1(isnan( H1(:,3)),3) = 0;
-
-        KR_norm = load(norm2);
-        KR_norm(KR_norm<0.1) = nan;
+        H1(isnan( H1(:,3)),3) = 0;    
+    end
+    if (~isempty(norm2))
+        disp('Normalizing contact map 2...');
+        if ischar(norm2)
+            KR_norm = load(norm2);
+            KR_norm(KR_norm<0.1) = nan;
+        elseif isnumeric(norm2) & ismatrix(norm2) & (size(norm2,2)==1)
+            KR_norm = norm1;
+        else
+           error('Wrong format for normalization vector 2') 
+        end
         H2(:,3) = H2(:,3)./(KR_norm(H2(:,1)).*KR_norm(H2(:,2)));
         H2(isnan( H2(:,3)),3) = 0;
     end
@@ -181,6 +206,9 @@ function [X,Y,P] = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,IN
 
     correctedPVAL = mafdr(PVAL,'BHFDR',1);
     [ptx,pty] = ind2sub(size(normH1),find(indNZ)); 
+    % discard significant DCIs in sparse regions
+    
+    % Return DCIs with p-value smaller than the threshold
     sigIndx = correctedPVAL < THRESHOLD;
     X = (ptx(sigIndx)-1)*RESOLUTION+(INTERVAL(1)-1)*RESOLUTION;
     Y = (pty(sigIndx)-1)*RESOLUTION+(INTERVAL(1)-1)*RESOLUTION;
