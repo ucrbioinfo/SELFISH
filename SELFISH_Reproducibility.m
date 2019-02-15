@@ -2,9 +2,9 @@ function S = SELFISH_Reproducibility(contc1,contc2)
 %SELFISH_Reproducibility computes reproducibility score between two contact
 %maps
 %
-%   S =   SELFISH_Reproducibility(contc1,RESOLUTION)
+%   S =   SELFISH_Reproducibility(contc1,contc2)
 %   Computes reproducibility score between two contact maps given by filenames/(i,j,v) triplets contc1 and
-%   contc2 with p-values less than THRESHOLD in the specified INTERVAL. 
+%   contc2 
 %
 %   'contc1'           -   contact map [file address] 1 in Rao format
 %
