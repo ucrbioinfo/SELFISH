@@ -6,13 +6,13 @@ function [X,Y,P] = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,IN
 %   finds DCIs, with coordinates [X,Y] and p-values P, between two contact maps given by (i,j,v) triplets/filenames contc1 and
 %   contc2 with p-values less than THRESHOLD in the specified interval INTERVAL. 
 %
-%   'contc1'           -   contact map filename 1
+%   'contc1'           -   contact map [filename] 1 in Rao format
 %
-%   'norm1'            -   normalization vector filename 1
+%   'norm1'            -   normalization vector [filename] 1
 %
-%   'contc2'           -   contact map filename 2
+%   'contc2'           -   contact map [filename] 2 in Rao format
 %
-%   'norm2'            -   normalization vector filename 2
+%   'norm2'            -   normalization vector [filename] 2
 %
 %   'THRESHOLD'        -   THRESHOLD at which DCIs are return
 %
