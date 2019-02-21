@@ -5,7 +5,7 @@ SELFISH (Discovery of Differential Chromatin Interactions via a Self-Similarity 
 
 <h3>Dependency </h3>
 
-- MATLAB 8.5 and newer.
+- MATLAB 8.5 or newer.
 
 <h3>Syntax</h3>
 
