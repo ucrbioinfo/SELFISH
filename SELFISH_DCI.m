@@ -203,7 +203,7 @@ function [X,Y,P] = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,IN
         % move to the next impact radius
         Lc = Ln;
     end
-    % if mafdr function is not supported in your MATLAB, change this line to "correctedPVAL = PVAL;"
+    
     correctedPVAL = mafdr(PVAL,'BHFDR',1);
     [ptx,pty] = ind2sub(size(normH1),find(indNZ)); 
     % discard significant DCIs in sparse regions
