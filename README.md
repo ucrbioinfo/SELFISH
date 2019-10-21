@@ -33,4 +33,4 @@ SELFISH_DCI doesn't take any parameters as input but it has two predefined param
 
 - `RESOLUTION`          data resoultion in bp (e.g. 5000)
 
-- `INTERVAL`            the interval in bp for which DCIs are detected (e.g. [10000000 15000000])
+- `INTERVAL`            the interval in bp for which DCIs are detected (e.g. [10000000 35000000])
