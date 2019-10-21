@@ -21,9 +21,9 @@ SELFISH_DCI doesn't take any parameters as input but it has two predefined param
 - `s = 10` the number of Gaussian radii used in the modeling.
 <h3>Inputs</h3>
 
-- `contc1`              Hi-C contact map filename 1 (e.g. '/5kb_resolution_intrachromosomal/chr1/MAPQGE30/chr1_5kb.RAWobserved')
+- `contc1`              Hi-C contact map filename 1 (e.g. '/chr1/MAPQGE30/chr1_5kb.RAWobserved')
 
-- `norm1`               normalization vector filename 1 (e.g. '/5kb_resolution_intrachromosomal/chr1/MAPQGE30/chr1_5kb.KRnorm')
+- `norm1`               normalization vector filename 1 (e.g. '/chr1/MAPQGE30/chr1_5kb.KRnorm')
 
 - `contc2`              Hi-C contact map filename 2
 
