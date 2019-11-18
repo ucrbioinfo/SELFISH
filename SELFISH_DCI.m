@@ -155,7 +155,7 @@ function [X,Y,P] = SELFISH_DCI(contc1,contc2,norm1,norm2,THRESHOLD,RESOLUTION,IN
     normH1(lidx) = 0;
     normH2(lidx) = 0;
 
-    indZ = zIndc1 | zIndc2 | lidx(:);
+    indZ = (zIndc1 & zIndc2) | lidx(:);
     indNZ = indZ == 0;
 
     nNZpts = sum(indNZ); 
